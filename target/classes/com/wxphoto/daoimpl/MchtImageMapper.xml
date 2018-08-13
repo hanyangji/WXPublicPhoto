@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wxphoto.dao.MchtImageMapper" >
+  <resultMap id="BaseResultMap" type="com.wxphoto.entity.MchtImage" >
+    <id column="MCHTID" property="mchtid" jdbcType="VARCHAR" />
+    <result column="MCHTNAME" property="mchtname" jdbcType="VARCHAR" />
+    <result column="IMAGE" property="image" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="FLAG" property="flag" jdbcType="VARCHAR" />
+    <result column="ISDELETE" property="isdelete" jdbcType="VARCHAR" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="VARCHAR" />
+    <result column="OPENID" property="openId" jdbcType="VARCHAR" />
+    <result column="WXNAME" property="wxName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MCHTID, MCHTNAME, IMAGE, TYPE, FLAG, ISDELETE, UPDATETIME
+  </sql>
+  <select id="selectByTime" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_MCHT_IMAGE
+   	<where>
+   	<if test="OPENID!=null">
+   	and OPENID=#{openId,jdbcType=VARCHAR}
+   	</if>
+   	<if test="start!=null and stop!=null">
+   	and UPDATETIME between #{start,jdbcType=VARCHAR} and #{stop,jdbcType=VARCHAR}
+   	</if>
+   	</where> 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_MCHT_IMAGE
+    where MCHTID = #{mchtid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.wxphoto.entity.MchtImage" >
+    insert into T_MCHT_IMAGE (MCHTID, MCHTNAME, IMAGE, 
+      TYPE, FLAG, ISDELETE, 
+      UPDATETIME)
+    values (#{mchtid,jdbcType=VARCHAR}, #{mchtname,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{isdelete,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wxphoto.entity.MchtImage" >
+    insert into T_MCHT_IMAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mchtid != null" >
+        MCHTID,
+      </if>
+      <if test="mchtname != null" >
+        MCHTNAME,
+      </if>
+      <if test="image != null" >
+        IMAGE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="isdelete != null" >
+        ISDELETE,
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME,
+      </if>
+      <if test="openId != null" >
+        OPENID,
+      </if>
+      <if test="wxName != null" >
+        WXNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mchtid != null" >
+        #{mchtid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchtname != null" >
+        #{mchtname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxName != null" >
+        #{wxName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wxphoto.entity.MchtImage" >
+    update T_MCHT_IMAGE
+    <set >
+      <if test="mchtname != null" >
+        MCHTNAME = #{mchtname,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        IMAGE = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        ISDELETE = #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        UPDATETIME = #{updatetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MCHTID = #{mchtid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wxphoto.entity.MchtImage" >
+    update T_MCHT_IMAGE
+    set MCHTNAME = #{mchtname,jdbcType=VARCHAR},
+      IMAGE = #{image,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      ISDELETE = #{isdelete,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=VARCHAR}
+    where MCHTID = #{mchtid,jdbcType=VARCHAR}
+  </update>
+</mapper>
