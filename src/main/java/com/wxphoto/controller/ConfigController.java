@@ -1,7 +1,10 @@
 package com.wxphoto.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +53,17 @@ public class ConfigController {
 	
 	
 	@RequestMapping("queryMchtInfo")
-	public ModelAndView find(MchtImage mchtImage) {
-		List<MchtImage> list= muis.query(mchtImage);
+	public ModelAndView find(MchtImage mchtImage,HttpServletRequest req) {
+		
+		System.out.println("openid:"+mchtImage.getOpenId());
+		System.out.println("st:"+mchtImage.getStart());
+//		List<MchtImage> list= muis.query(mchtImage);
+		List<MchtImage> list=new  ArrayList<MchtImage>();
+		list.add(mchtImage);
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("mchtlist");
 		modelAndView.addObject("dataList", list);
+		req.setAttribute("openid", list.get(0).getOpenId());
 		return modelAndView;
 	}
 	 

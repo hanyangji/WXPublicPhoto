@@ -43,6 +43,8 @@
 <input id="date_demo__formats--a" class="fieldset__input" style="width:30%;" name="start" type=text placeholder="起始时间">
 -- <input id="date_demo__formats--aa" class="fieldset__input" style="width:30%" name="stop" type=text placeholder="结束时间">
 <div class="col-center-btn">
+<input type="hidden" id="openid" name="openId" value="${openid}"/>
+
 <button type="submit" id="find" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询
 </button>
@@ -61,6 +63,7 @@
 <td><font size="2px">${data.mchtid}</font></td>
 <td><font size="2px">${data.mchtname}</font></td>
 <td><font size="2px">${data.updatetime}</font></td>
+
 </tr>
 </c:forEach>
 </table>
