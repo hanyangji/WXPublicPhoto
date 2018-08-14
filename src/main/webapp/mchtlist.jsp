@@ -11,30 +11,35 @@
 <title>商户上传信息</title>
 <!-- Bootstrap -->
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 <div class="container-fluid">
 <form class="form-horizontal">
+
 <div class="form-group">
 <table class="table table-striped">
-<tr>
+<tr style="text-align: center">
   <td>#</td>
-  <td>商户号</td>
-  <td>商户名</td>
-  <td>上传时间</td>
+  <td><font size="2px">商户号</font></td>
+  <td><font size="2px">商户名</font></td>
+  <td><font size="2px">上传时间</font></td>
   </tr>
-<c:forEach items="${dataList }" var="data">
+<c:forEach items="${dataList}" var="data" varStatus="j">
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><font size="2px">${j.count}</font></td>
+<td><font size="2px">${data.mchtid}</font></td>
+<td><font size="2px">${data.mchtname}</font></td>
+<td><font size="2px">${data.updatetime}</font></td>
 </tr>
 </c:forEach>
-  
 </table>
 </div>
 </form>
 </div>
+
+<script type="text/javascript">
+  
+</script>
 </body>
 </html>

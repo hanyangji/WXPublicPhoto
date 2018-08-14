@@ -46,13 +46,25 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 			image+=filename+",";
 		}
 		mchtImage.setImage(image);
-		mchtImage.setUpdatetime(DateFormat.getCurrentDate());
+		mchtImage.setUpdatetime(DateFormat.getCurrentDateHours());
 		DataSourceContextHolder.setDataSourceType(DataSourceConst.ORACLE);
 		//存入数据库
 		Integer count=mim.insertSelective(mchtImage);
 		return count;
 	}
 	
+	public List<MchtImage> query(MchtImage mchtImage){
+		List<MchtImage> list=mim.selectByTime(mchtImage);
+		if(list==null) {
+			list.get(0).setMchtid("暂无商户信息");
+		}
+		return list;
+	}
+	
+	/**
+	 * 实体类转map
+	 * 2018年8月13日上午10:25:05
+	 */
 	public Map<String,String> toStringList(String mediaIdStr) {
 		JSONObject jsonObject = JSONObject.fromObject(mediaIdStr);
 		Map<String,String> map=new HashMap<String, String>();
@@ -67,28 +79,31 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 		return map;
 	}
 	
+	/**
+	 * 下载方法
+	 * 2018年8月13日上午10:24:29
+	 */
 	public String save(Entry<String,String> map,String mchtId) {
 		String filename = null;
 		InputStream inputStream = WeiXinUtil.getMedia(map.getValue());
 		InputStream inputstream=null;
 //		byte[] data = new byte[1024];
 //		int len = 0;
-		Boolean flag=false;
 		try {
 			String path="";
 			if(map.getKey().equals("wxlogo")||map.getKey().equals("door")||map.getKey().equals("activity")) {
 				// 服务器存图路径
 				path = PathContent.DownLoadImg +"/"+DateFormat.getCurrentDate()+ "/" + mchtId+"/"+PathContent.WX;
-				flag=writeFile(path,inputStream,map.getKey());
+				filename=writeFile(path,inputStream,map.getKey(),"wx");
 			}else if(map.getKey().equals("alilogo")){
 				path = PathContent.DownLoadImg +"/"+DateFormat.getCurrentDate()+ "/" + mchtId+"/"+PathContent.ZFB;
-				flag=writeFile(path,inputStream,map.getKey());
+				filename=writeFile(path,inputStream,map.getKey(),"zfb");
 			}else {
 				path = PathContent.DownLoadImg +"/"+DateFormat.getCurrentDate()+ "/" + mchtId+"/"+PathContent.WX;
-				flag=writeFile(path,inputStream,map.getKey());
+				filename=writeFile(path,inputStream,map.getKey(),"wx");
 				inputstream=WeiXinUtil.getMedia(map.getValue());
 				path = PathContent.DownLoadImg +"/"+DateFormat.getCurrentDate()+ "/" + mchtId+"/"+PathContent.ZFB;
-				flag=writeFile(path,inputstream,map.getKey());
+				filename=filename+","+writeFile(path,inputstream,map.getKey(),"zfb");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -108,45 +123,56 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 				}
 			}
 		}
-		if(flag) {
-			filename=map.getKey()+".jpg";
-		}
 		return filename;
 	}
 	
-	public Boolean writeFile(String path,InputStream inputStream,String key) throws IOException  {
+	/**
+	 * 数据流写数据
+	 * 2018年8月13日上午10:24:51
+	 */
+	public String writeFile(String path,InputStream inputStream,String key,String type) throws IOException  {
 		FileOutputStream fileOutputStream = null;
 		byte[] data = new byte[1024];
 		int len = 0;
 		String filename = "";
-		Boolean flag=false;
 		File sf = new File(path);
 		if (!sf.exists()) {
 			sf.mkdirs();
 		}
-		if(key.equals("wxlogo")) {
-			filename = "微信LOGO的收银台.jpg";
-		}else if(key.equals("door")) {
-			filename = "地推人员和门头合照.jpg";
-		}else if(key.equals("activity")) {
-			filename = "摇摇乐活动照.jpg";
-		}else if(key.equals("alilogo")) {
-			filename = "支付宝LOGO收银台.jpg";
-		}else if(key.equals("platform")) {
-			filename = "入驻主流餐饮平台展示照.jpg";
-		}else if(key.equals("wxbusiness")) {
-			filename = "营业执照.jpg";
-		}else if(key.equals("wxdoor")) {
-			filename = "门头照片.jpg";
-		}else if(key.equals("wxinside")) {
-			filename = "内部经营照片.jpg";
+		if(type.equals("wx")) {
+			if(key.equals("wxlogo")) {
+				filename = "收银台.jpg";
+			}else if(key.equals("door")) {
+				filename = "BD和商户门头照.jpg";
+			}else if(key.equals("activity")) {
+				filename = "摇摇乐照.jpg";
+			}else if(key.equals("platform")) {
+				filename = "入驻照.jpg";
+			}else if(key.equals("wxbusiness")) {
+				filename = "营业执照.jpg";
+			}else if(key.equals("wxdoor")) {
+				filename = "门头照.jpg";
+			}else if(key.equals("wxinside")) {
+				filename = "店内环境.jpg";
+			}
+		}else {
+			if(key.equals("alilogo")) {
+				filename = "2.jpg";
+			}else if(key.equals("platform")) {
+				filename = "5.jpg";
+			}else if(key.equals("wxbusiness")) {
+				filename = "3.jpg";
+			}else if(key.equals("wxdoor")) {
+				filename = "1.jpg";
+			}else if(key.equals("wxinside")) {
+				filename = "4.jpg";
+			}
 		}
 		try {
 			fileOutputStream = new FileOutputStream(sf.getPath() + "/" + filename);
 			while ((len = inputStream.read(data)) != -1) {
 			fileOutputStream.write(data, 0, len);
 			fileOutputStream.flush();
-			flag=true;
 		}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -160,7 +186,7 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 				}
 			}
 		}
-		return flag;
+		return filename;
 	}
 
 }

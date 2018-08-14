@@ -11,7 +11,7 @@ public interface MchtImageMapper {
 
     int insertSelective(MchtImage record);
 
-    List<MchtImage> selectByTime(String mchtid);
+    List<MchtImage> selectByTime(MchtImage mchtImage);
 
     int updateByPrimaryKeySelective(MchtImage record);
 

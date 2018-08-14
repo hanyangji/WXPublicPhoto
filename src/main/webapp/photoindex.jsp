@@ -24,7 +24,7 @@
       <input type="text" class="form-control input-lg"  onchange="chadnge(this.value)"  placeholder="商户号" id="mchtid" name="mchtid" maxlength="15" onkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
       
     </div>
-   <button type="button" class="col-xs-2 btn btn-info btn-lg">查看</button>
+   <button type="button" id="find" class="col-xs-2 btn btn-info btn-lg"><a href="queryMchtInfo.do?openId=${info.openid}">查看</a></button>
   </div>
   <div class="form-group">
     <div class="col-xs-12">
@@ -114,6 +114,8 @@
 <script src='https://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script type="text/javascript">
 var serverMap={};
+
+
 $("#wxlogo").click(function(){
 	choosePic();
 })
@@ -262,7 +264,7 @@ function saveImageToDisk(){
         	success:function(data){
         		serverIds='';
         		alert("保存成功!");
-        		window.location.reload();
+        		window.location.href = "/WXPublicPhoto/wxLogin"
         	},
         	error:function(data){
         		alert("保存失败!")

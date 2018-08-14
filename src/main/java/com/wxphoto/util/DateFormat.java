@@ -19,6 +19,12 @@ public class DateFormat {
 		return date;
 	}
 	
+	public static String getCurrentDateHours(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd hh:mm");
+		String date = sdf.format(new Date());
+		return date;
+	}
+	
 	public static String getSettDate(int days){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Calendar cal = Calendar.getInstance();

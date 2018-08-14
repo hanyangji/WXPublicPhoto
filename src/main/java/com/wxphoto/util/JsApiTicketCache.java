@@ -49,7 +49,7 @@ public class JsApiTicketCache {
                 result.put("jsapi_ticket", jsapiTicket);
                 result.put("expires_in", expiresIn);
             }else {
-            	WeiXinUtil wxu=new WeiXinUtil();
+            		WeiXinUtil wxu=new WeiXinUtil();
                 JsapiTicket info = wxu.getJsapiTicket();//实际中这里要改为你自己调用微信接口去获取jsapi_ticket和expires_in
                 logger.info("----Ticket超时，调用微信接口获取jsapi_ticket：" + info.getJsapiTicket());
                 //将信息放置缓存中
