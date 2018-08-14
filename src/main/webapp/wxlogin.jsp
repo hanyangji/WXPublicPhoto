@@ -1,40 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<title>商户图片采集</title>
-
-<!-- Bootstrap -->
-<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>...</title>
+    <!--在IE浏览器中运行最新的渲染模式-->
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <!--初始化移动浏览器显示-->
+    <meta name="viewport" content="width-device-width,inital-scale=1">
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+      <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+      var p = 101;
+          var stop = 1;
+          function run() {
+              p += 4;
+              $("div[class=bar]").css("width", p + "%");
+              var timer = setTimeout("run()", 500);
+              if (p >100&&stop<1) {         
+                  p = 0;
+              }
+          }
+          $('#BtnSubmit').click(function () {
+              $('#myModal1').modal('show');
+              p = 0;
+              stop = 0;
+              run();
+              $('#UpLoad').submit();
+              
+          });
+      </script>
 </head>
 <body>
-<button class="btn btn-primary btn-lg btn-block"   onclick="showActionSheet()">主要按钮</button>
-<script type="text/javascript">
-//点击事件，弹出选择摄像头和相册的选项  
-function showActionSheet() {    
-    var bts = [{    
-        title: "拍照"    
-    }, {    
-        title: "从相册选择"    
-    }];    
-    plus.nativeUI.actionSheet({    
-            cancel: "取消",    
-            buttons: bts    
-        },    
-        function(e) {    
-            if (e.index == 1) {    
-                getImage();    
-            } else if (e.index == 2) {    
-                galleryImgs();    
-            }    
-        }    
-    );    
-}  
-</script>
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" style="width:300px"> 
+   <div class="modal-dialog">
+       <div class="modal-content" >
+           <span style="text-align:center;color:red">文件正在上传请勿刷新页面！</span><br />
+          
+           <div class="progress progress-striped active">
+               <div class="bar">
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+
+         
 </body>
 </html>

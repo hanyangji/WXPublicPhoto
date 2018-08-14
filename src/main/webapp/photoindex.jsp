@@ -20,12 +20,15 @@
 <body>
 <%-- 	<div>用户昵称${info.nickname}</div>--%>
 	<%-- <div ><input id="openid" value="${info.openid}">用户openid:${info.openid}</div>  --%>
-	
 	<input type="hidden" id="openid" value="${info.openid}"/>
-<div class="container">
+	    <div class="progress progress-striped active">
+        <div id="prog" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+        </div>
+    </div>
+<div class="container"> 
+
   <form class="form-horizontal" id="myform">
   <div class="form-group">
-    <label for="inputEmail3" class="col-xs-12 control-label"></label>
     <div class="col-xs-8">
       <input type="text" class="form-control input-lg"  onchange="chadnge(this.value)"  placeholder="商户号" id="mchtid" name="mchtid" maxlength="15" onkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
       
@@ -85,7 +88,7 @@
       <button class="btn btn-primary btn-lg btn-block" onclick="saveImageToDisk()" id="sub" disabled>确定</button>
     </div>
   </div>
-</div>
+ </div>
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
  <p ><span style="color:red;">图片要求:1、带支付宝LOGO收银台照片:要求能看到收单机构的POS机具或二维码牌,必须找事具有支付宝LOGO和"推荐使用支付宝"露出的物料和红包码物料,红包码物料必须是规范的张贴在收银台或者墙上,不允许摆拍。
@@ -264,6 +267,7 @@ function wxUploadImg(localIds,imgFlag){
 function saveImageToDisk(){
 	var str='';
 	str = JSON.stringify(serverMap); 
+	
 	$.ajax({
         url: "saveImageToDisk.do",
         type: 'POST',
@@ -275,9 +279,13 @@ function saveImageToDisk(){
         		openId:$("#openid").val(),
         		servermap:str,
         	},
+        	beforeSend: function () {
+        		progress();
+        		
+        	},
         	success:function(data){
         		serverIds='';
-        		alert("保存成功!");
+        		alert("上传成功!");
         		window.location.href = "/WXPublicPhoto/wxLogin"
         	},
         	error:function(data){
@@ -285,6 +293,34 @@ function saveImageToDisk(){
         	}
     })
 }
+
+function progress(){
+	var value = 0;
+    var time = 100;
+    //进度条复位函数
+     function reset( ) {
+      value = 0
+        $("#prog").removeClass("progress-bar-success").css("width","0%").text("正在刷新");
+        //setTimeout(increment,5000);
+    } 
+    //百分数增加，0-30时为红色，30-60为黄色，60-90为蓝色，>90为绿色
+    function increment( ) {
+        value += 1;
+        $("#prog").css("width",value + "%").text(value + "%");
+        if (value>=0 && value<100) {
+            $("#prog").addClass("progress-bar-success");
+        } else{
+            /* setTimeout(reset,1000); */
+            return;
+        } 
+        st = setTimeout(increment,time);
+    }
+    increment(); 
+}
+
+
+
+
 
 
 $(document).ready(function () { 
