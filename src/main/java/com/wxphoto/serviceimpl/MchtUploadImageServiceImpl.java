@@ -54,10 +54,8 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 	}
 	
 	public List<MchtImage> query(MchtImage mchtImage){
+		System.out.println(mchtImage.getStart()+"--"+mchtImage.getStop());
 		List<MchtImage> list=mim.selectByTime(mchtImage);
-		if(list==null) {
-			list.get(0).setMchtid("暂无商户信息");
-		}
 		return list;
 	}
 	

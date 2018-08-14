@@ -10,6 +10,12 @@
 <title>商户图片采集</title>
 <!-- Bootstrap -->
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+.col-center-btn {
+    float:right;
+    padding-right:15px
+}
+</style>
 </head>
 <body>
 <%-- 	<div>用户昵称${info.nickname}</div>--%>
@@ -20,11 +26,16 @@
   <form class="form-horizontal" id="myform">
   <div class="form-group">
     <label for="inputEmail3" class="col-xs-12 control-label"></label>
-    <div class="col-xs-9">
+    <div class="col-xs-8">
       <input type="text" class="form-control input-lg"  onchange="chadnge(this.value)"  placeholder="商户号" id="mchtid" name="mchtid" maxlength="15" onkeyup="value=value.replace(/[\W]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"/>
       
     </div>
-   <button type="button" id="find" class="col-xs-2 btn btn-info btn-lg"><a href="queryMchtInfo.do?openId=${info.openid}">查看</a></button>
+   <!-- <button type="button" id="find" class="col-xs-2 btn btn-info btn-lg" onclick="find()">查看</button> -->
+   <div class="col-center-btn">
+<button type="button" class="btn btn-default btn-lg" id="find" >
+  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 查看
+</button>
+</div>
   </div>
   <div class="form-group">
     <div class="col-xs-12">
@@ -114,8 +125,11 @@
 <script src='https://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script type="text/javascript">
 var serverMap={};
-
-
+ 
+$("#find").click(function (){
+	 window.location.href = "/WXPublicPhoto/queryMchtInfo.do?openId="+$("#openid").val()
+ }
+)
 $("#wxlogo").click(function(){
 	choosePic();
 })

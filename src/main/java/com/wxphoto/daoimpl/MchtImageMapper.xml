@@ -24,7 +24,13 @@
    	and OPENID=#{openId,jdbcType=VARCHAR}
    	</if>
    	<if test="start!=null and stop!=null">
-   	and UPDATETIME between #{start,jdbcType=VARCHAR} and #{stop,jdbcType=VARCHAR}
+   	and UPDATETIME &gt;= #{start,jdbcType=VARCHAR} and UPDATETIME &lt;= #{stop,jdbcType=VARCHAR}
+   	</if>
+   	<if test="start==null and stop!=null">
+   	 and UPDATETIME &lt;= #{stop,jdbcType=VARCHAR}
+   	</if>
+   	<if test="start!=null and stop==null">
+   	and UPDATETIME &gt;= #{start,jdbcType=VARCHAR}
    	</if>
    	</where> 
   </select>
