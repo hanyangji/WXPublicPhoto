@@ -73,15 +73,6 @@
   </tr>
   </table>
   
-<!--     <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <button class="ui-btn-lg-nowhole ui-btn-primary" onclick="upload()">拍照</button>
-        </label>
-      </div>
-    </div>
-  </div> -->  
 </form>
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
@@ -95,29 +86,7 @@
   2、带微信LOGO收银台照片:要求能看到收单机构的POS机具或二维码牌,必须展示具有微信支付LOGO露出的物料</span></p>
 </div>
 </div>
-<!-- <div class="ui-form ui-border-t">
-        <div class="ui-form-item ui-border-b">
-            <label>
-                商户号
-            </label>
-            <input type="text" placeholder="商户号" id="mchtid" name="mchtid">
-        </div>
-        <div class="ui-form-item ui-form-item-link ui-border-b">
-            <label>
-                商户名称
-            </label>
-            <input type="text" placeholder="商户名称" id="mchtname" name="mchtname">
-        </div>
-        <div class="ui-btn-wrap">
-        <button class="ui-btn-lg-nowhole ui-btn-primary" onclick="upload()">拍照</button>
-        </div>
-        <div class="ui-btn-wrap">
-            <button class="ui-btn-lg-nowhole ui-btn-primary" onclick="saveImageToDisk()">
-                确定
-            </button>
-        </div>
-        <div id="alert"></div>
-</div> -->
+
 
 
 
@@ -128,9 +97,31 @@
 <script src='https://res.wx.qq.com/open/js/jweixin-1.2.0.js'></script>
 <script type="text/javascript">
 var serverMap={};
- 
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}
 $("#find").click(function (){
-	 window.location.href = "/WXPublicPhoto/queryMchtInfo.do?openId="+$("#openid").val()
+	var currentdate=getNowFormatDate()+"";
+	   var date_ = new Date();  
+	   var year = date_.getFullYear();  
+	   var month = date_.getMonth() + 1; 
+	   if (month >= 1 && month <= 9) {
+	        month = "0" + month;
+	    }
+	   var first = year + '-'+month + '-01'+"";//当月第一天
+	 window.location.href = "/WXPublicPhoto/queryMchtInfo.do?openId="+$("#openid").val()+"&start="+first+"&stop="+currentdate
  }
 )
 $("#wxlogo").click(function(){
@@ -296,7 +287,7 @@ function saveImageToDisk(){
 
 function progress(){
 	var value = 0;
-    var time = 100;
+    var time = 50;
     //进度条复位函数
      function reset( ) {
       value = 0

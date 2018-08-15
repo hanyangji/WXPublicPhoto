@@ -20,7 +20,7 @@ public class DateFormat {
 	}
 	
 	public static String getCurrentDateHours(){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		String date = sdf.format(new Date());
 		return date;
 	}

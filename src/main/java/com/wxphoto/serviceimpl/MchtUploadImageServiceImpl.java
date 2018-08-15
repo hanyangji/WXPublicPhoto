@@ -54,8 +54,18 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 	}
 	
 	public List<MchtImage> query(MchtImage mchtImage){
-		System.out.println(mchtImage.getStart()+"--"+mchtImage.getStop());
+		String st=mchtImage.getStop();
+		if(st!=null) {
+			String[] str=mchtImage.getStop().split("-");
+			str[2]=String.valueOf(Integer.valueOf(str[2])+1);
+			String stop="";
+			stop+=str[0]+"-";
+			stop+=str[1]+"-";
+			stop+=str[2];
+			mchtImage.setStop(stop);
+		}
 		List<MchtImage> list=mim.selectByTime(mchtImage);
+		mchtImage.setStop(st);
 		return list;
 	}
 	

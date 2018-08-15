@@ -53,17 +53,13 @@ public class ConfigController {
 	
 	
 	@RequestMapping("queryMchtInfo")
+	@ResponseBody
 	public ModelAndView find(MchtImage mchtImage,HttpServletRequest req) {
-		
-		System.out.println("openid:"+mchtImage.getOpenId());
-		System.out.println("st:"+mchtImage.getStart());
-//		List<MchtImage> list= muis.query(mchtImage);
-		List<MchtImage> list=new  ArrayList<MchtImage>();
-		list.add(mchtImage);
+		List<MchtImage> list= muis.query(mchtImage);
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("mchtlist");
 		modelAndView.addObject("dataList", list);
-		req.setAttribute("openid", list.get(0).getOpenId());
+		req.setAttribute("mchtImage", mchtImage);
 		return modelAndView;
 	}
 	 
