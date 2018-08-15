@@ -89,29 +89,6 @@
 <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
 <script type="text/javascript">
-
-/* $("#find").click(function(){
-	$("#tbody").html("");
-	$.ajax({
-		url:"queryMchtInfo.do",
-		type:"post",
-		dataType: 'json',
-		data:{
-			start:$("#datetime-picker").val(),
-			stop:$("#datetime-picker-stop").val(),
-			openId:$("#openid").val()
-		},
-		success:function(data){
-			alert(data),
-			$.each(data, function(i, it) {
-                $("#tbody").html($("#tbody").html()+
-                    "<tr class='info' id='tr"+i+"'><td>"+i+"</td><td>"+it.mchtid+"</td><td>"
-                    +it.mchtname+"</td><td>" +it.updatetime+"</td></tr>");
-            });
-		},
-	})
-}); */
-
 $("#datetime-picker").calendar({
 	
 });
