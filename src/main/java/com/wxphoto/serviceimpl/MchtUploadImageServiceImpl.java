@@ -149,19 +149,19 @@ public class MchtUploadImageServiceImpl implements MchtUploadImageService {
 		}
 		if(type.equals("wx")) {
 			if(key.equals("wxlogo")) {
-				filename = "收银台.jpg";
+				filename = "2.收银台.jpg";
 			}else if(key.equals("door")) {
-				filename = "BD和商户门头照.jpg";
+				filename = "6.BD和商户门头照.jpg";
 			}else if(key.equals("activity")) {
-				filename = "摇摇乐照.jpg";
+				filename = "7.摇摇乐照.jpg";
 			}else if(key.equals("platform")) {
-				filename = "入驻照.jpg";
+				filename = "5.入驻照.jpg";
 			}else if(key.equals("wxbusiness")) {
-				filename = "营业执照.jpg";
+				filename = "3.营业执照.jpg";
 			}else if(key.equals("wxdoor")) {
-				filename = "门头照.jpg";
+				filename = "1.门头照.jpg";
 			}else if(key.equals("wxinside")) {
-				filename = "店内环境.jpg";
+				filename = "4.店内环境.jpg";
 			}
 		}else {
 			if(key.equals("alilogo")) {
